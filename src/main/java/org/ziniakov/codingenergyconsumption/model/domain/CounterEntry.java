@@ -20,6 +20,7 @@ import java.util.Date;
 @Builder
 @Table(name = "counter_entry")
 public class CounterEntry {
+
     @Id
     @Column(name="counter_entry_id", nullable=false, unique=true)
     @GeneratedValue(strategy = GenerationType.AUTO)

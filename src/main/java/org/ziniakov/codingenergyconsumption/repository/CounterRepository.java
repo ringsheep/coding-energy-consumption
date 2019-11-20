@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface CounterRepository extends CrudRepository<Counter, String> {
+
     @Override
     Optional<Counter> findById(String counterId);
 }

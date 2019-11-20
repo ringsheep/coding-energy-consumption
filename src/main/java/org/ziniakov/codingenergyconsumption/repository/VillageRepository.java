@@ -6,6 +6,7 @@ import org.ziniakov.codingenergyconsumption.model.domain.Village;
 
 @Repository
 public interface VillageRepository extends CrudRepository<Village, String> {
+
     @Override
     Iterable<Village> findAll();
 }

@@ -6,6 +6,7 @@ import org.ziniakov.codingenergyconsumption.model.domain.CounterEntry;
 
 @Repository
 public interface CounterEntryRepository extends CrudRepository<CounterEntry, String> {
+
     @Override
     CounterEntry save(CounterEntry counterEntry);
 }

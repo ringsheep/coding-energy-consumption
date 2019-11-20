@@ -1,5 +1,6 @@
 package org.ziniakov.codingenergyconsumption.service;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ import org.ziniakov.codingenergyconsumption.repository.CounterRepository;
 import java.util.Date;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CounterService {
+
     private CounterRepository counterRepository;
     private CounterEntryRepository counterEntryRepository;
+    private DateService dateService;
 
     public CounterEntryResponse addCounterEntry(CounterEntryRequest request) {
         CounterEntry entry = counterEntryRepository.save(createCounterEntry(request));
@@ -32,7 +35,7 @@ public class CounterService {
 
     private CounterEntry createCounterEntry(CounterEntryRequest request) {
         return CounterEntry.builder()
-                .creationDateTime(new Date())
+                .creationDateTime(dateService.getDate())
                 .amount(request.getAmount())
                 .counter(getCounter(request.getCounterId()))
                 .build();

@@ -1,5 +1,6 @@
 package org.ziniakov.codingenergyconsumption.model.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -13,8 +14,10 @@ import javax.persistence.Table;
 
 @Entity
 @Data
+@Builder
 @Table(name = "counter")
 public class Counter {
+
     @Id
     @Column(name="counter_id", nullable=false, unique=true)
     @GeneratedValue(strategy = GenerationType.AUTO)

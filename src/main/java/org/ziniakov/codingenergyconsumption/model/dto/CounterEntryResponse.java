@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class CounterEntryResponse {
+
     @JsonProperty
     String id;
 }

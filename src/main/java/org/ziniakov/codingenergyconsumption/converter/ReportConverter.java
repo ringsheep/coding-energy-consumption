@@ -1,9 +1,9 @@
 package org.ziniakov.codingenergyconsumption.converter;
 
-import org.ziniakov.codingenergyconsumption.dto.ReportDuration;
+import org.ziniakov.codingenergyconsumption.model.dto.ReportTimePeriod;
 
 public class ReportConverter {
-    public ReportDuration convert(String duration) {
-        return new ReportDuration();
+    public ReportTimePeriod convert(String duration) {
+        return new ReportTimePeriod();
     }
 }

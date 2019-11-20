@@ -63,6 +63,8 @@ class CounterServiceTest {
         assertEquals(counterEntryResponse, result);
     }
 
+    // TODO: add case for unexisting counter
+
     @Test
     void getCounter_should_return_correct_counter() {
         var result = service.getCounterShortInfo("1");

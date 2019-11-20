@@ -12,8 +12,6 @@ import static java.util.Map.entry;
 @Component
 public class ReportConverter {
 
-    private static final int MINIMUM_DURATION_STRING_LENGTH = 2;
-
     private static final Map<String, Function<Long, Duration>> measurementToDurationMapping = Map.ofEntries(
             entry("s", Duration::ofSeconds),
             entry("m", Duration::ofMinutes),
@@ -23,11 +21,13 @@ public class ReportConverter {
 
     @SneakyThrows
     public Duration convert(String duration) {
-        if (duration.length() < MINIMUM_DURATION_STRING_LENGTH) {
-            throw new Exception("Wrong duration string format. Please use any like these: 60s, 120m, 24h, 3d");
-        }
         var durationValue = duration.substring(0, duration.length() - 1);
         var durationMeasure = duration.substring(duration.length() - 1);
+
+        // TODO: replace validation by smth more reliable and flexible like regex
+        if (measurementToDurationMapping.get(durationMeasure) == null) {
+            throw new Exception("Wrong duration string format. Please use any like these: 60s, 120m, 24h, 3d");
+        }
 
         return measurementToDurationMapping.get(durationMeasure)
                 .apply(Long.parseLong(durationValue));

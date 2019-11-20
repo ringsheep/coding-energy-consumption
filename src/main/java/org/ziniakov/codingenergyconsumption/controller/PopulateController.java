@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.ziniakov.codingenergyconsumption.model.domain.Counter;
 import org.ziniakov.codingenergyconsumption.model.domain.Village;
+import org.ziniakov.codingenergyconsumption.model.dto.CounterEntryRequest;
 import org.ziniakov.codingenergyconsumption.repository.CounterRepository;
 import org.ziniakov.codingenergyconsumption.repository.VillageRepository;
+import org.ziniakov.codingenergyconsumption.service.CounterService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -16,6 +18,7 @@ public class PopulateController {
 
     private CounterRepository counterRepository;
     private VillageRepository villageRepository;
+    private CounterService service;
 
     // TODO: refactor to use a sql file for db initialization
     //  https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-database-initialization
@@ -27,8 +30,17 @@ public class PopulateController {
         villageOne = villageRepository.save(villageOne);
         villageTwo = villageRepository.save(villageTwo);
 
-        counterRepository.save(new Counter().setVillage(villageOne));
-        counterRepository.save(new Counter().setVillage(villageOne));
-        counterRepository.save(new Counter().setVillage(villageTwo));
+        var counterOne = new Counter().setVillage(villageOne);
+        var counterTwo = new Counter().setVillage(villageOne);
+        var counterThree = new Counter().setVillage(villageTwo);
+
+        counterOne = counterRepository.save(counterOne);
+        counterTwo = counterRepository.save(counterTwo);
+        counterThree = counterRepository.save(counterThree);
+
+        service.addCounterEntry(new CounterEntryRequest().setAmount(100.003F).setCounterId(counterOne.getId().toString()));
+        service.addCounterEntry(new CounterEntryRequest().setAmount(10.33F).setCounterId(counterOne.getId().toString()));
+        service.addCounterEntry(new CounterEntryRequest().setAmount(420.103F).setCounterId(counterTwo.getId().toString()));
+        service.addCounterEntry(new CounterEntryRequest().setAmount(30.124F).setCounterId(counterThree.getId().toString()));
     }
 }

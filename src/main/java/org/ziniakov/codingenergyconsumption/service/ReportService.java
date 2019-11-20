@@ -3,6 +3,7 @@ package org.ziniakov.codingenergyconsumption.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.ziniakov.codingenergyconsumption.model.domain.CounterEntry;
+import org.ziniakov.codingenergyconsumption.model.domain.Village;
 import org.ziniakov.codingenergyconsumption.model.dto.EnergyConsumptionReport;
 import org.ziniakov.codingenergyconsumption.model.dto.VillageReport;
 import org.ziniakov.codingenergyconsumption.repository.CounterEntryRepository;
@@ -34,23 +35,28 @@ public class ReportService {
     }
 
     private List<VillageReport> mapEntriesToVillageReports(List<CounterEntry> entries) {
-        Map<String, Float> villageNamesConsumptionMap = new HashMap<>();
-        entries.forEach(counterEntry ->
-                villageNamesConsumptionMap.put(counterEntry.getCounter().getVillage().getName(), counterEntry.getAmount())
-        );
-
-        return villageNamesConsumptionMap.entrySet()
+        return createVillageConsumptionMap(entries).entrySet()
                 .stream()
                 .map(villageConsumptionEntry -> new VillageReport()
-                        .setVillageName(villageConsumptionEntry.getKey())
+                        .setVillageName(villageConsumptionEntry.getKey().getName())
                         .setConsumption(villageConsumptionEntry.getValue())
                 )
                 .collect(Collectors.toList());
 
     }
 
-    private VillageReport createRep(VillageReport rep) {
-        return rep;
+    private Map<Village, Float> createVillageConsumptionMap(List<CounterEntry> entries) {
+        Map<Village, Float> villageConsumptionMap = new HashMap<>();
+
+        entries.forEach(
+                counterEntry -> {
+                    var village = counterEntry.getCounter().getVillage();
+                    var currentConsumption = villageConsumptionMap.getOrDefault(village, 0F);
+                    villageConsumptionMap.put(village, currentConsumption + counterEntry.getAmount());
+                }
+        );
+
+        return villageConsumptionMap;
     }
 
     private Date getDateBeforeDate(Date stopDate, Duration duration) {

@@ -1,6 +1,6 @@
 package org.ziniakov.codingenergyconsumption.controller;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,8 +11,9 @@ import org.ziniakov.codingenergyconsumption.service.ReportService;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class ReportController {
+
     private ReportService service;
 
     private ReportConverter converter;
@@ -21,4 +22,5 @@ public class ReportController {
     public EnergyConsumptionReport getEnergyConsumptionReport(@RequestParam String duration) {
         return service.getEnergyConsumptionReport(converter.convert(duration));
     }
+
 }

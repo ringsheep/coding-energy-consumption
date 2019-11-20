@@ -7,7 +7,7 @@ import java.util.Date;
 @Service
 public class DateService {
 
-    public Date getDate() {
+    public Date getCurrentDate() {
         return new Date();
     }
 }

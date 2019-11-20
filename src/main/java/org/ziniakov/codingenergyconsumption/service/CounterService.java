@@ -40,7 +40,7 @@ public class CounterService {
 
     private CounterEntry createCounterEntry(CounterEntryRequest request) {
         return new CounterEntry()
-                .setCreationDateTime(dateService.getDate())
+                .setCreationDateTime(dateService.getCurrentDate())
                 .setAmount(request.getAmount())
                 .setCounter(getCounter(request.getCounterId()));
     }

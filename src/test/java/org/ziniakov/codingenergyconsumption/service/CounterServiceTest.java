@@ -46,7 +46,7 @@ class CounterServiceTest {
     @BeforeEach
     void setUp() {
         service = new CounterService(counterRepository, counterEntryRepository, dateService);
-        doReturn(date).when(dateService).getDate();
+        doReturn(date).when(dateService).getCurrentDate();
         doReturn(Optional.ofNullable(counter)).when(counterRepository).findById(1L);
     }
 

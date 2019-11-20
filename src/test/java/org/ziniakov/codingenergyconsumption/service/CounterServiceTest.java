@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.ziniakov.codingenergyconsumption.model.domain.Counter;
 import org.ziniakov.codingenergyconsumption.model.domain.CounterEntry;
+import org.ziniakov.codingenergyconsumption.model.domain.Village;
 import org.ziniakov.codingenergyconsumption.model.dto.CounterEntryRequest;
 import org.ziniakov.codingenergyconsumption.model.dto.CounterEntryResponse;
+import org.ziniakov.codingenergyconsumption.model.dto.CounterShortInfo;
 import org.ziniakov.codingenergyconsumption.repository.CounterEntryRepository;
 import org.ziniakov.codingenergyconsumption.repository.CounterRepository;
 
@@ -25,30 +27,27 @@ class CounterServiceTest {
 
     private CounterService service;
 
+    // TODO: moved to separate test data class
     private Date date = Date.from(Instant.ofEpochSecond(1574281064));
-    private Counter counter = Counter.builder()
-            .id("counter 1")
-            .build();
-    private CounterEntry counterEntryToCreate = CounterEntry.builder()
-            .amount(100.00f)
-            .counter(counter)
-            .creationDateTime(date)
-            .build();
-    private CounterEntry createdCounterEntry = CounterEntry.builder()
-            .amount(100.00f)
-            .id("entry 1")
-            .counter(counter)
-            .creationDateTime(date)
-            .build();
-    private CounterEntryResponse counterEntryResponse = CounterEntryResponse.builder()
-            .id("entry 1")
-            .build();
+    private Village village = new Village().setId(2L).setName("Villarriba");
+    private CounterShortInfo counterShortInfo = new CounterShortInfo().setId("1").setVillageName(village.getName());
+    private Counter counter = new Counter().setId(1L).setVillage(village);
+    private CounterEntry counterEntryToCreate = new CounterEntry()
+            .setAmount(100.00f)
+            .setCounter(counter)
+            .setCreationDateTime(date);
+    private CounterEntry createdCounterEntry = new CounterEntry()
+            .setAmount(100.00f)
+            .setId(1L)
+            .setCounter(counter)
+            .setCreationDateTime(date);
+    private CounterEntryResponse counterEntryResponse = new CounterEntryResponse().setId("1");
 
     @BeforeEach
     void setUp() {
         service = new CounterService(counterRepository, counterEntryRepository, dateService);
         doReturn(date).when(dateService).getDate();
-        doReturn(Optional.ofNullable(counter)).when(counterRepository).findById("counter 1");
+        doReturn(Optional.ofNullable(counter)).when(counterRepository).findById(1L);
     }
 
     @Test
@@ -56,10 +55,9 @@ class CounterServiceTest {
         doReturn(createdCounterEntry).when(counterEntryRepository).save(counterEntryToCreate);
 
         var result = service.addCounterEntry(
-                CounterEntryRequest.builder()
-                .amount(100.00f)
-                .counterId("counter 1")
-                .build()
+                new CounterEntryRequest()
+                .setAmount(100.00f)
+                .setCounterId("1")
         );
 
         assertEquals(counterEntryResponse, result);
@@ -67,8 +65,8 @@ class CounterServiceTest {
 
     @Test
     void getCounter_should_return_correct_counter() {
-        var result = service.getCounter("counter 1");
+        var result = service.getCounterShortInfo("1");
 
-        assertEquals(counter, result);
+        assertEquals(counterShortInfo, result);
     }
 }

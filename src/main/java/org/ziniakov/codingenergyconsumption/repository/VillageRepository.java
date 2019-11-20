@@ -5,8 +5,12 @@ import org.springframework.stereotype.Repository;
 import org.ziniakov.codingenergyconsumption.model.domain.Village;
 
 @Repository
-public interface VillageRepository extends CrudRepository<Village, String> {
+public interface VillageRepository extends CrudRepository<Village, Long> {
 
     @Override
     Iterable<Village> findAll();
+
+    @Override
+    <S extends Village> S save(S entity);
+
 }

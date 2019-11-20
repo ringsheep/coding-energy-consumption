@@ -1,7 +1,7 @@
 package org.ziniakov.codingenergyconsumption.model.domain;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,17 +17,17 @@ import java.util.Date;
 
 @Entity
 @Data
-@Builder
+@Accessors(chain = true)
 @Table(name = "counter_entry")
 public class CounterEntry {
 
     @Id
     @Column(name="counter_entry_id", nullable=false, unique=true)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
-    @Column(name="amount", nullable=false, unique=true)
-    private float amount;
+    @Column(name="amount", nullable=false)
+    private Float amount;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDateTime;

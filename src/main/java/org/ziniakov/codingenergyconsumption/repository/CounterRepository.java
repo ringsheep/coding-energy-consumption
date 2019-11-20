@@ -7,8 +7,12 @@ import org.ziniakov.codingenergyconsumption.model.domain.Counter;
 import java.util.Optional;
 
 @Repository
-public interface CounterRepository extends CrudRepository<Counter, String> {
+public interface CounterRepository extends CrudRepository<Counter, Long> {
 
     @Override
-    Optional<Counter> findById(String counterId);
+    Optional<Counter> findById(Long counterId);
+
+    @Override
+    <S extends Counter> S save(S entity);
+
 }

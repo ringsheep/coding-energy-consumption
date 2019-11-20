@@ -6,8 +6,11 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class CounterEntryResponse {
+public class CounterShortInfo {
 
     @JsonProperty
     String id;
+
+    @JsonProperty(value = "village_name")
+    String villageName;
 }

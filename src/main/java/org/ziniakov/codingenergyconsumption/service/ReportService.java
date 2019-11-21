@@ -22,18 +22,32 @@ public class ReportService {
     private CounterEntryRepository counterEntryRepository;
     private DateService dateService;
 
+    /**
+     * forms a summary report of all energy which was consumed in specified duration from now
+     * @param duration which time offset from now we should start our report with?
+     * @return report which maps consumption to other entities (e.g., villages)
+     */
     public EnergyConsumptionReport getEnergyConsumptionReport(Duration duration) {
         var entries = getAllEntriesInDuration(duration);
         return new EnergyConsumptionReport()
                 .setVillageReports(mapEntriesToVillageReports(entries));
     }
 
+    /**
+     * @param duration will be used to create a time period before now
+     * @return all entities matching specified period
+     */
     private List<CounterEntry> getAllEntriesInDuration(Duration duration) {
         var stopDate = dateService.getCurrentDate();
         var startDate = getDateBeforeDate(stopDate, duration);
         return counterEntryRepository.findBetweenDates(startDate, stopDate);
     }
 
+    /**
+     * flattens all consumption records to village consumption reports, merging all counters' records in each village
+     * @param entries consumption records
+     * @return village consumption reports
+     */
     private List<VillageReport> mapEntriesToVillageReports(List<CounterEntry> entries) {
         return createVillageConsumptionMap(entries).entrySet()
                 .stream()
@@ -45,20 +59,30 @@ public class ReportService {
 
     }
 
+    /**
+     * finds all villages in records and summs their consumption
+     * @param entries consumption records
+     * @return map village -> consumption
+     */
     private Map<Village, Float> createVillageConsumptionMap(List<CounterEntry> entries) {
-        Map<Village, Float> villageConsumptionMap = new HashMap<>();
+        Map<Village, Float> villagesConsumptionMap = new HashMap<>();
 
         entries.forEach(
                 counterEntry -> {
                     var village = counterEntry.getCounter().getVillage();
-                    var currentConsumption = villageConsumptionMap.getOrDefault(village, 0F);
-                    villageConsumptionMap.put(village, currentConsumption + counterEntry.getAmount());
+                    var currentConsumption = villagesConsumptionMap.getOrDefault(village, 0F);
+                    villagesConsumptionMap.put(village, currentConsumption + counterEntry.getAmount());
                 }
         );
 
-        return villageConsumptionMap;
+        return villagesConsumptionMap;
     }
 
+    /**
+     * @param stopDate date to be subtracted from
+     * @param duration time amount to be subtracted
+     * @return stopDate minus duration
+     */
     private Date getDateBeforeDate(Date stopDate, Duration duration) {
         return Date.from(
                 stopDate.toInstant().minusSeconds(duration.toSeconds())

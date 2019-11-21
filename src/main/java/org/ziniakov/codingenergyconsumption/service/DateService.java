@@ -7,6 +7,10 @@ import java.util.Date;
 @Service
 public class DateService {
 
+    /**
+     * encapsulates date creation for testability and less coupling
+     * @return current date
+     */
     public Date getCurrentDate() {
         return new Date();
     }

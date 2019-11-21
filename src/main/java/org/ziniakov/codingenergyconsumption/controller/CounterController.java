@@ -18,11 +18,21 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CounterController {
     private CounterService service;
 
+    /**
+     * saves a new energy consumption record if a corresponding counter exists
+     * @param request with counterId and consumption amount
+     * @return response with created consumption record id
+     */
     @PostMapping(path = "/counter_callback", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public CounterEntryResponse addCounterEntry(@RequestBody CounterEntryRequest request) {
         return service.addCounterEntry(request);
     }
 
+    /**
+     * tells us to which village this counter is linked
+     * @param id of an existing counter
+     * @return short info with counter id and village name
+     */
     @GetMapping(path = "/counter", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public CounterShortInfo getCounterShortInfo(@RequestParam String id) {
         return service.getCounterShortInfo(id);

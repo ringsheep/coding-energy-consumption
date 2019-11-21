@@ -19,6 +19,11 @@ public class ReportConverter {
             entry("d", Duration::ofDays)
     );
 
+    /**
+     * Converts duration string to java.util.Duration
+     * @param duration in string format (Long + s/m/h/d)
+     * @return java.util.Duration instance
+     */
     @SneakyThrows
     public Duration convert(String duration) {
         var durationValue = duration.substring(0, duration.length() - 1);

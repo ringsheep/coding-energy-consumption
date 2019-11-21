@@ -14,12 +14,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @AllArgsConstructor
-public class PopulateController {
+public class DemoController {
 
     private CounterRepository counterRepository;
     private VillageRepository villageRepository;
     private CounterService service;
 
+    /**
+     * a handy endpoint to populate data for demonstration purposes
+     */
     // TODO: refactor to use a sql file for db initialization
     //  https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-database-initialization
     @GetMapping(path = "/populate_sample_data", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)

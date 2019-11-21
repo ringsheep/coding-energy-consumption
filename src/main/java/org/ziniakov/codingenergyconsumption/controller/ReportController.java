@@ -18,6 +18,11 @@ public class ReportController {
 
     private ReportConverter converter;
 
+    /**
+     * forms a summary report of all energy which was consumed in specified duration from now
+     * @param duration which time offset from now we should start our report with?
+     * @return report which maps consumption to other entities (e.g., villages)
+     */
     @GetMapping(path = "/consumption_report", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public EnergyConsumptionReport getEnergyConsumptionReport(@RequestParam String duration) {
         return service.getEnergyConsumptionReport(converter.convert(duration));

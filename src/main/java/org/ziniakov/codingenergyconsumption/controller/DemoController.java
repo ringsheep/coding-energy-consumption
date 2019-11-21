@@ -25,8 +25,8 @@ public class DemoController {
      */
     // TODO: refactor to use a sql file for db initialization
     //  https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-database-initialization
-    @GetMapping(path = "/populate_sample_data", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public void populateSampleData() {
+    @GetMapping(path = "/populate_demo_data", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public void populateDemoData() {
         var villageOne = new Village().setName("Villarriba");
         var villageTwo = new Village().setName("Villabajo");
 

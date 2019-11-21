@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class CounterEntryRequest {
+public class ConsumptionRecordRequest {
 
     @JsonProperty("counter_id")
     private String counterId;

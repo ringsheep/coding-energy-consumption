@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.ziniakov.codingenergyconsumption.model.domain.Counter;
 import org.ziniakov.codingenergyconsumption.model.domain.Village;
-import org.ziniakov.codingenergyconsumption.model.dto.CounterEntryRequest;
+import org.ziniakov.codingenergyconsumption.model.dto.ConsumptionRecordRequest;
 import org.ziniakov.codingenergyconsumption.repository.CounterRepository;
 import org.ziniakov.codingenergyconsumption.repository.VillageRepository;
 import org.ziniakov.codingenergyconsumption.service.CounterService;
@@ -41,9 +41,9 @@ public class DemoController {
         counterTwo = counterRepository.save(counterTwo);
         counterThree = counterRepository.save(counterThree);
 
-        service.addCounterEntry(new CounterEntryRequest().setAmount(100.003F).setCounterId(counterOne.getId().toString()));
-        service.addCounterEntry(new CounterEntryRequest().setAmount(10.33F).setCounterId(counterOne.getId().toString()));
-        service.addCounterEntry(new CounterEntryRequest().setAmount(420.103F).setCounterId(counterTwo.getId().toString()));
-        service.addCounterEntry(new CounterEntryRequest().setAmount(30.124F).setCounterId(counterThree.getId().toString()));
+        service.addConsumptionRecord(new ConsumptionRecordRequest().setAmount(100.003F).setCounterId(counterOne.getId().toString()));
+        service.addConsumptionRecord(new ConsumptionRecordRequest().setAmount(10.33F).setCounterId(counterOne.getId().toString()));
+        service.addConsumptionRecord(new ConsumptionRecordRequest().setAmount(420.103F).setCounterId(counterTwo.getId().toString()));
+        service.addConsumptionRecord(new ConsumptionRecordRequest().setAmount(30.124F).setCounterId(counterThree.getId().toString()));
     }
 }

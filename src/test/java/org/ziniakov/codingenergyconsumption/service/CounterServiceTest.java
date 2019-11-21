@@ -4,12 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.ziniakov.codingenergyconsumption.model.domain.Counter;
-import org.ziniakov.codingenergyconsumption.model.domain.CounterEntry;
+import org.ziniakov.codingenergyconsumption.model.domain.ConsumptionRecord;
 import org.ziniakov.codingenergyconsumption.model.domain.Village;
-import org.ziniakov.codingenergyconsumption.model.dto.CounterEntryRequest;
-import org.ziniakov.codingenergyconsumption.model.dto.CounterEntryResponse;
+import org.ziniakov.codingenergyconsumption.model.dto.ConsumptionRecordRequest;
+import org.ziniakov.codingenergyconsumption.model.dto.ConsumptionRecordResponse;
 import org.ziniakov.codingenergyconsumption.model.dto.CounterShortInfo;
-import org.ziniakov.codingenergyconsumption.repository.CounterEntryRepository;
+import org.ziniakov.codingenergyconsumption.repository.ConsumptionRecordRepository;
 import org.ziniakov.codingenergyconsumption.repository.CounterRepository;
 
 import java.time.Instant;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.doReturn;
 class CounterServiceTest {
 
     private CounterRepository counterRepository = Mockito.mock(CounterRepository.class);
-    private CounterEntryRepository counterEntryRepository = Mockito.mock(CounterEntryRepository.class);
+    private ConsumptionRecordRepository consumptionRecordRepository = Mockito.mock(ConsumptionRecordRepository.class);
     private DateService dateService = Mockito.mock(DateService.class);
 
     private CounterService service;
@@ -32,35 +32,35 @@ class CounterServiceTest {
     private Village village = new Village().setId(2L).setName("Villarriba");
     private CounterShortInfo counterShortInfo = new CounterShortInfo().setId("1").setVillageName(village.getName());
     private Counter counter = new Counter().setId(1L).setVillage(village);
-    private CounterEntry counterEntryToCreate = new CounterEntry()
+    private ConsumptionRecord consumptionRecordToCreate = new ConsumptionRecord()
             .setAmount(100.00f)
             .setCounter(counter)
             .setCreationDateTime(date);
-    private CounterEntry createdCounterEntry = new CounterEntry()
+    private ConsumptionRecord createdConsumptionRecord = new ConsumptionRecord()
             .setAmount(100.00f)
             .setId(1L)
             .setCounter(counter)
             .setCreationDateTime(date);
-    private CounterEntryResponse counterEntryResponse = new CounterEntryResponse().setId("1");
+    private ConsumptionRecordResponse consumptionRecordResponse = new ConsumptionRecordResponse().setId("1");
 
     @BeforeEach
     void setUp() {
-        service = new CounterService(counterRepository, counterEntryRepository, dateService);
+        service = new CounterService(counterRepository, consumptionRecordRepository, dateService);
         doReturn(date).when(dateService).getCurrentDate();
         doReturn(Optional.ofNullable(counter)).when(counterRepository).findById(1L);
     }
 
     @Test
-    void addCounterEntry_should_add_counterEntry() {
-        doReturn(createdCounterEntry).when(counterEntryRepository).save(counterEntryToCreate);
+    void addConsumptionRecord_should_add_record() {
+        doReturn(createdConsumptionRecord).when(consumptionRecordRepository).save(consumptionRecordToCreate);
 
-        var result = service.addCounterEntry(
-                new CounterEntryRequest()
+        var result = service.addConsumptionRecord(
+                new ConsumptionRecordRequest()
                 .setAmount(100.00f)
                 .setCounterId("1")
         );
 
-        assertEquals(counterEntryResponse, result);
+        assertEquals(consumptionRecordResponse, result);
     }
 
     // TODO: add case for unexisting counter

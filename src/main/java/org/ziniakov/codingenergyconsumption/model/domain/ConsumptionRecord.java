@@ -18,8 +18,8 @@ import java.util.Date;
 @Entity
 @Data
 @Accessors(chain = true)
-@Table(name = "counter_entry")
-public class CounterEntry {
+@Table(name = "consumption_record")
+public class ConsumptionRecord {
 
     @Id
     @Column(name="counter_entry_id", nullable=false, unique=true)

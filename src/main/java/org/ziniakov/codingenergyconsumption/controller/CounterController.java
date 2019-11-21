@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.ziniakov.codingenergyconsumption.model.dto.CounterEntryRequest;
-import org.ziniakov.codingenergyconsumption.model.dto.CounterEntryResponse;
+import org.ziniakov.codingenergyconsumption.model.dto.ConsumptionRecordRequest;
+import org.ziniakov.codingenergyconsumption.model.dto.ConsumptionRecordResponse;
 import org.ziniakov.codingenergyconsumption.model.dto.CounterShortInfo;
 import org.ziniakov.codingenergyconsumption.service.CounterService;
 
@@ -24,8 +24,8 @@ public class CounterController {
      * @return response with created consumption record id
      */
     @PostMapping(path = "/counter_callback", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public CounterEntryResponse addCounterEntry(@RequestBody CounterEntryRequest request) {
-        return service.addCounterEntry(request);
+    public ConsumptionRecordResponse addConsumptionRecord(@RequestBody ConsumptionRecordRequest request) {
+        return service.addConsumptionRecord(request);
     }
 
     /**

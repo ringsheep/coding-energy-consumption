@@ -2,11 +2,11 @@ package org.ziniakov.codingenergyconsumption.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.ziniakov.codingenergyconsumption.model.domain.CounterEntry;
+import org.ziniakov.codingenergyconsumption.model.domain.ConsumptionRecord;
 import org.ziniakov.codingenergyconsumption.model.domain.Village;
 import org.ziniakov.codingenergyconsumption.model.dto.EnergyConsumptionReport;
 import org.ziniakov.codingenergyconsumption.model.dto.VillageReport;
-import org.ziniakov.codingenergyconsumption.repository.CounterEntryRepository;
+import org.ziniakov.codingenergyconsumption.repository.ConsumptionRecordRepository;
 
 import java.time.Duration;
 import java.util.Date;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ReportService {
 
-    private CounterEntryRepository counterEntryRepository;
+    private ConsumptionRecordRepository consumptionRecordRepository;
     private DateService dateService;
 
     /**
@@ -28,28 +28,28 @@ public class ReportService {
      * @return report which maps consumption to other entities (e.g., villages)
      */
     public EnergyConsumptionReport getEnergyConsumptionReport(Duration duration) {
-        var entries = getAllEntriesInDuration(duration);
+        var records = getAllRecordsInDuration(duration);
         return new EnergyConsumptionReport()
-                .setVillageReports(mapEntriesToVillageReports(entries));
+                .setVillageReports(mapRecordsToVillageReports(records));
     }
 
     /**
      * @param duration will be used to create a time period before now
      * @return all entities matching specified period
      */
-    private List<CounterEntry> getAllEntriesInDuration(Duration duration) {
+    private List<ConsumptionRecord> getAllRecordsInDuration(Duration duration) {
         var stopDate = dateService.getCurrentDate();
         var startDate = getDateBeforeDate(stopDate, duration);
-        return counterEntryRepository.findBetweenDates(startDate, stopDate);
+        return consumptionRecordRepository.findBetweenDates(startDate, stopDate);
     }
 
     /**
      * flattens all consumption records to village consumption reports, merging all counters' records in each village
-     * @param entries consumption records
+     * @param records consumption records
      * @return village consumption reports
      */
-    private List<VillageReport> mapEntriesToVillageReports(List<CounterEntry> entries) {
-        return createVillageConsumptionMap(entries).entrySet()
+    private List<VillageReport> mapRecordsToVillageReports(List<ConsumptionRecord> records) {
+        return createVillageConsumptionMap(records).entrySet()
                 .stream()
                 .map(villageConsumptionEntry -> new VillageReport()
                         .setVillageName(villageConsumptionEntry.getKey().getName())
@@ -61,17 +61,17 @@ public class ReportService {
 
     /**
      * finds all villages in records and summs their consumption
-     * @param entries consumption records
+     * @param records consumption records
      * @return map village -> consumption
      */
-    private Map<Village, Float> createVillageConsumptionMap(List<CounterEntry> entries) {
+    private Map<Village, Float> createVillageConsumptionMap(List<ConsumptionRecord> records) {
         Map<Village, Float> villagesConsumptionMap = new HashMap<>();
 
-        entries.forEach(
-                counterEntry -> {
-                    var village = counterEntry.getCounter().getVillage();
+        records.forEach(
+                consumptionRecord -> {
+                    var village = consumptionRecord.getCounter().getVillage();
                     var currentConsumption = villagesConsumptionMap.getOrDefault(village, 0F);
-                    villagesConsumptionMap.put(village, currentConsumption + counterEntry.getAmount());
+                    villagesConsumptionMap.put(village, currentConsumption + consumptionRecord.getAmount());
                 }
         );
 

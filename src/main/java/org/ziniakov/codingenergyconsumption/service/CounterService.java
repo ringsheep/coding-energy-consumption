@@ -21,6 +21,7 @@ public class CounterService {
 
     /**
      * saves a new energy consumption record if a corresponding counter exists
+     *
      * @param request with counterId and consumption amount
      * @return response with created consumption record id
      */
@@ -31,6 +32,7 @@ public class CounterService {
 
     /**
      * tells us to which village this counter is linked
+     *
      * @param id of an existing counter
      * @return short info with counter id and village name
      */
@@ -43,6 +45,7 @@ public class CounterService {
 
     /**
      * get full info of a counter
+     *
      * @param id of an existing counter
      * @return counter db model
      */
@@ -55,6 +58,7 @@ public class CounterService {
 
     /**
      * creates a new record linked with current time
+     *
      * @param request an input model with new recording data
      * @return created record
      */

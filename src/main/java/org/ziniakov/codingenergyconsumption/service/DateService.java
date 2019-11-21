@@ -9,6 +9,7 @@ public class DateService {
 
     /**
      * encapsulates date creation for testability and less coupling
+     *
      * @return current date
      */
     public Date getCurrentDate() {

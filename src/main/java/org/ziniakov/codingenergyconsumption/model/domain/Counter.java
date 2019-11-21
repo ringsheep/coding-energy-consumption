@@ -19,11 +19,11 @@ import javax.persistence.Table;
 public class Counter {
 
     @Id
-    @Column(name="counter_id", nullable=false, unique=true)
+    @Column(name = "counter_id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="village_id", referencedColumnName="village_id")
+    @JoinColumn(name = "village_id", referencedColumnName = "village_id")
     private Village village;
 }

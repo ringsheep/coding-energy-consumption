@@ -17,10 +17,10 @@ import javax.persistence.Table;
 public class Village {
 
     @Id
-    @Column(name="village_id", nullable=false, unique=true)
+    @Column(name = "village_id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="village_name", nullable=false)
+    @Column(name = "village_name", nullable = false)
     private String name;
 }

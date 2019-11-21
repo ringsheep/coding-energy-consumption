@@ -20,6 +20,7 @@ public class CounterController {
 
     /**
      * saves a new energy consumption record if a corresponding counter exists
+     *
      * @param request with counterId and consumption amount
      * @return response with created consumption record id
      */
@@ -30,6 +31,7 @@ public class CounterController {
 
     /**
      * tells us to which village this counter is linked
+     *
      * @param id of an existing counter
      * @return short info with counter id and village name
      */

@@ -24,6 +24,7 @@ public class ReportService {
 
     /**
      * forms a summary report of all energy which was consumed in specified duration from now
+     *
      * @param duration which time offset from now we should start our report with?
      * @return report which maps consumption to other entities (e.g., villages)
      */
@@ -45,6 +46,7 @@ public class ReportService {
 
     /**
      * flattens all consumption records to village consumption reports, merging all counters' records in each village
+     *
      * @param records consumption records
      * @return village consumption reports
      */
@@ -61,6 +63,7 @@ public class ReportService {
 
     /**
      * finds all villages in records and summs their consumption
+     *
      * @param records consumption records
      * @return map village -> consumption
      */

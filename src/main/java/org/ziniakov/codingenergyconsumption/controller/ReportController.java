@@ -20,6 +20,7 @@ public class ReportController {
 
     /**
      * forms a summary report of all energy which was consumed in specified duration from now
+     *
      * @param duration which time offset from now we should start our report with?
      * @return report which maps consumption to other entities (e.g., villages)
      */

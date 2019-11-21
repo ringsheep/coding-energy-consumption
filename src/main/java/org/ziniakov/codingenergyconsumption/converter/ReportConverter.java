@@ -21,6 +21,7 @@ public class ReportConverter {
 
     /**
      * Converts duration string to java.util.Duration
+     *
      * @param duration in string format (Long + s/m/h/d)
      * @return java.util.Duration instance
      */

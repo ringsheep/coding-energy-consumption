@@ -56,8 +56,8 @@ class CounterServiceTest {
 
         var result = service.addConsumptionRecord(
                 new ConsumptionRecordRequest()
-                .setAmount(100.00f)
-                .setCounterId("1")
+                        .setAmount(100.00f)
+                        .setCounterId("1")
         );
 
         assertEquals(consumptionRecordResponse, result);
